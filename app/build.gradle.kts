@@ -15,8 +15,8 @@ repositories {
     maven {
         url = uri("https://maven.pkg.github.com/austral-ingsis/chess-ui")
         credentials {
-            username = System.getenv("GITHUB_USER")
-            password = System.getenv("GITHUB_TOKEN")
+            username = "SantiPe"
+            password = "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"
         }
     }
 }
@@ -25,6 +25,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("edu.austral.dissis.chess:chess-ui:1.0.0")
+    testImplementation("org.testng:testng:7.1.0")
 }
 
 javafx {
