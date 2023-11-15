@@ -21,7 +21,8 @@ class Game(
 
         for (validator in validators) {
             if (!validator.validate(movement, actualBoard)) {
-                throw Exception("Invalid movement, broke validator")
+                print("Invalid movement, broke validator")
+                return this
             } else {
                 canMove = true
             }
@@ -54,7 +55,8 @@ class Game(
             }
             movement.getFrom().getPiece()!!.setHasMoved()
         } else {
-            throw Exception("Invalid movement")
+            print("Invalid movement")
+            return this
         }
 
         val newGame = Game(Board(newPositions), newMovements.plus(actualBoard), newEaten, winner, movement.getPlayerTurn(), validators)
@@ -66,7 +68,7 @@ class Game(
         val opponentCheck = CheckValidator().validate(newGame2)
 
         if (CheckMateValidator().validate(newGame2)) {
-            println("End of the game, the winner is: " + winner.getColor())
+            println("End of the game, the winner is: " + turn.getColor())
             return Game()
         }
 
@@ -120,7 +122,7 @@ class Game(
         return actualBoard.display()
     }
 
-    fun initialState(){
+    fun initialState(): Game{
         val positions = arrayOfNulls<Position>(64)
         for (i in 0 until 64){
             positions[i] = Position(i % 8, i / 8, null)
@@ -157,8 +159,9 @@ class Game(
         positions[61] = Position(5, 7, Piece(Color.WHITE, PieceType.BISHOP))
         positions[62] = Position(6, 7, Piece(Color.WHITE, PieceType.KNIGHT))
         positions[63] = Position(7, 7, Piece(Color.WHITE, PieceType.ROOK))
-        actualBoard = Board(positions as Array<Position>)
-        turn = Player("name", Color.WHITE)
-        validators = arrayOf(InBoundsValidator(), TeamValidator(), MovementValidator(), InBetweenPieceValidator())
+        var board = Board(positions as Array<Position>)
+        var playerTurn = Player("name", Color.WHITE)
+        var validatorList = arrayOf(InBoundsValidator(), TeamValidator(), MovementValidator(), InBetweenPieceValidator())
+        return Game(board, movements, eaten, Player("name", Color.WHITE), playerTurn, validatorList)
     }
 }

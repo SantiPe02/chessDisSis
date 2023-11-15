@@ -39,10 +39,23 @@ class CheckMateValidator {
     }
 
     private fun isValidMove(game: Game, from: Position, toX: Int, toY: Int): Boolean {
-        val to = game.getActualBoard().getPositions()[toY * 8 + toX]
-        val movement = Movement(game.getTurn(), from, to)
-        val movementValidator = MovementValidator()
+        var valid = false
+        try {
+            val to = game.getActualBoard().getPositions()[toY * 8 + toX]
+            val movement = Movement(game.getTurn(), from, to)
+            val movementValidator = MovementValidator()
+            if (movementValidator.validate(movement, game.getActualBoard())) {
+                val newGame = game.action(movement)
+                val checkValidator = CheckValidator()
+                if (checkValidator.validate(newGame)) {
+                    return false
+                }
+                valid = true
+            }
+        } catch (e: Exception) {
+            print("Invalid move")
+        }
 
-        return movementValidator.validate(movement, game.getActualBoard())
+        return valid
     }
 }
