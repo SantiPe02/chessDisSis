@@ -1,10 +1,10 @@
 package edu.austral.dissis.chess.validators
 
-import edu.austral.dissis.chess.structure.Board
-import edu.austral.dissis.chess.structure.Movement
+import edu.austral.dissis.common.structure.Board
+import edu.austral.dissis.common.structure.Movement
 
 class TeamValidator : Validator {
     override fun validate(movement: Movement, board: Board): Boolean {
-        return movement.getPlayerTurn().getColor() == movement.getFrom().getPiece()!!.getColor()
+        return board.getPiece(movement.getFrom())!!.getColor() == movement.getTurn()
     }
 }
