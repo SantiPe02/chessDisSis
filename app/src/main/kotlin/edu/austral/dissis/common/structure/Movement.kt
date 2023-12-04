@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.structure
 
-import edu.austral.dissis.chess.enums.Color
+import edu.austral.dissis.common.enums.Color
 
 data class Movement(
     private val from: Position,
@@ -10,10 +10,10 @@ data class Movement(
 ) {
 
     fun getFrom(): Position {
-        val row = from.getX()
-        val col = from.getY()
+        val row = from.getRow()
+        val col = from.getColumn()
         for (key in board.getPositions().keys){
-            if (key.getX() == row && key.getY() == col){
+            if (key.getRow() == row && key.getColumn() == col){
                 return key
             }
         }
@@ -21,11 +21,11 @@ data class Movement(
     }
 
     fun getTo(): Position {
-        val row = to.getX()
-        val col = to.getY()
+        val row = to.getRow()
+        val col = to.getColumn()
         if (!board.getPositions().containsKey(to)) {
             for (key in board.getPositions().keys) {
-                if (key.getX() == row && key.getY() == col) {
+                if (key.getRow() == row && key.getColumn() == col) {
                     return key
                 }
             }

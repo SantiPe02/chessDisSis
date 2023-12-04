@@ -1,15 +1,14 @@
 package edu.austral.dissis.app
 
+import edu.austral.dissis.common.enums.Color
+import edu.austral.dissis.common.enums.PieceType
+import edu.austral.dissis.chess.gui.*
+import edu.austral.dissis.common.results.move_results.CanMoveResult
+import edu.austral.dissis.common.results.move_results.GameOverResult
+import edu.austral.dissis.common.results.move_results.InvalidMovement
 import edu.austral.dissis.common.structure.Game
 import edu.austral.dissis.common.structure.Movement
 import edu.austral.dissis.common.structure.Piece
-import edu.austral.dissis.chess.enums.Color
-import edu.austral.dissis.chess.enums.PieceType
-import edu.austral.dissis.chess.gui.*
-import edu.austral.dissis.chess.gui.Position
-import edu.austral.dissis.common.results.CanMoveResult
-import edu.austral.dissis.common.results.GameOverResult
-import edu.austral.dissis.common.results.InvalidMovement
 
 class Adapter(private var game: Game): GameEngine {
 
@@ -33,7 +32,7 @@ class Adapter(private var game: Game): GameEngine {
         val pieces = ArrayList<ChessPiece>()
         val board = game.getActualBoard()
         board.getPositions().forEach {
-            pieces.add(ChessPiece(it.value.getId(), colorAdapter(it.value.getColor()), Position(it.key.getX(), it.key.getY()), typeAdapter(it.value)))
+            pieces.add(ChessPiece(it.value.getId(), colorAdapter(it.value.getColor()), Position(it.key.getRow(), it.key.getColumn()), typeAdapter(it.value)))
         }
         return pieces
     }

@@ -1,12 +1,12 @@
 package edu.austral.dissis.common.structure
 
 
-class Position(private val x: Int, private val y: Int) {
-    fun getX(): Int {
-        return x
+class Position(private val row: Int, private val column: Int) {
+    fun getRow(): Int {
+        return row
     }
 
-    fun getY(): Int {
-        return y
+    fun getColumn(): Int {
+        return column
     }
 }
