@@ -21,7 +21,9 @@ class IsEating: MovementRule {
         val enemyPiece = board.getPieceAt(endingRow, endingColumn)
         val toPiece = board.getPiece(to)
 
-        if (enemyPiece != null && enemyPiece.getColor() != toPiece?.getColor() && toPiece == null) {
+
+
+        if (enemyPiece != null && enemyPiece.getColor() != movement.getTurn() && toPiece == null) {
             return ValidResult()
         }
         return InvalidResult("Invalid movement: no enemy around")

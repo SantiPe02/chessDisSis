@@ -18,7 +18,7 @@ fun validatePromotion(movement: Movement, board: Board): Boolean {
             return true
         }
     }
-    else{
+    if(pieceColor == Color.BLACK){
         if (movement.getTo().getRow() == 1){
             return true
         }

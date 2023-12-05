@@ -8,6 +8,7 @@ import edu.austral.dissis.common.structure.Movement
 
 class TeamValidator : Validator {
     override fun validate(movement: Movement, board: Board): ValidationResult {
+        if (board.getPiece(movement.getFrom()) == null) return InvalidResult("Invalid movement: no piece selected")
         if (board.getPiece(movement.getFrom())!!.getColor() == movement.getTurn()) {
             return ValidResult()
         }

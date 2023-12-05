@@ -151,6 +151,22 @@ fun createClassicChessRules(type: PieceType): MovementRule {
                         Diagonal(),
                         Obstacles()
                     )
+                ),
+                AndRule(
+                    listOf(
+                        RightCastlingCondition(),
+                        Obstacles(),
+                        HorizontalMove(),
+                        LimitedQuantity(2)
+                    )
+                ),
+                AndRule(
+                    listOf(
+                        LeftCastlingCondition(),
+                        HorizontalMove(),
+                        Obstacles(),
+                        LimitedQuantity(2)
+                    )
                 )
             )
         )

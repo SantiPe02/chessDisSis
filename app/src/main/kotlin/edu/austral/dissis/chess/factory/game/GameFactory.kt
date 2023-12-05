@@ -1,6 +1,8 @@
 package edu.austral.dissis.chess.factory.game
 
+import edu.austral.dissis.chess.movers.LeftCastling
 import edu.austral.dissis.chess.movers.Promotion
+import edu.austral.dissis.chess.movers.RightCastling
 import edu.austral.dissis.chess.turn_manager.ChessTurnManager
 import edu.austral.dissis.chess.validators.NotInCheck
 import edu.austral.dissis.chess.winning_conditions.CheckMateValidator
@@ -18,7 +20,7 @@ fun createInitialChessGame(): Game {
     val turn = Color.WHITE
     val winningConditions = arrayOf(CheckMateValidator(), AnotherWinningCondition())
     val turnManager = ChessTurnManager()
-    val movers = listOf(Promotion(), RegularMove())
+    val movers = listOf(RightCastling(), LeftCastling(), Promotion(), RegularMove())
 
-    return Game(board, arrayOf(board), turn, validators, winningConditions, turnManager, movers)
+    return Game(board, arrayOf(), turn, validators, winningConditions, turnManager, movers)
 }

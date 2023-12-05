@@ -14,7 +14,7 @@ import edu.austral.dissis.common.winning_conditions.WinningCondition
 
 class Game(
     private var actualBoard: Board,
-    private var movements: Array<Board>,
+    private var movements: Array<Movement>,
     private var turn: Color,
     private var validators: Array<Validator>,
     private var winningConditions: Array<WinningCondition>,
@@ -23,14 +23,17 @@ class Game(
 ) {
 
     fun action(movement: Movement): MoveResult {
-        if (canMove(movement)) {
+        if (validateValidators(movement)) {
             val newBoard = move(movement, actualBoard)
-            val newMovements = movements + actualBoard
-            val newGame = Game(newBoard, newMovements, switchTurn(), validators, winningConditions, turnManager, movers)
-            if (gameOver(newGame)) {
-                return GameOverResult(turn)
+            if (validatePieceRules(movement)) {
+                val newMovements = movements + movement
+                val newGame =
+                    Game(newBoard, newMovements, switchTurn(), validators, winningConditions, turnManager, movers)
+                if (gameOver(newGame)) {
+                    return GameOverResult(turn)
+                }
+                return CanMoveResult(newGame)
             }
-            return CanMoveResult(newGame)
         }
         return InvalidMovement("Invalid movement")
     }
@@ -50,16 +53,6 @@ class Game(
         }
     }
 
-    private fun move(movement: Movement, board: Board): Board{
-        for (mover in movers){
-            if (mover.validate(movement, board)){
-                return mover.move(movement, board)
-            }
-        }
-        return actualBoard
-    }
-
-
     private fun validateValidators(movement: Movement): Boolean {
         for (validator in validators) {
             when (validator.validate(movement, actualBoard)) {
@@ -68,6 +61,15 @@ class Game(
             }
         }
         return true
+    }
+
+    private fun move(movement: Movement, board: Board): Board{
+        for (mover in movers){
+            if (mover.validate(movement, board)){
+                return mover.move(movement, board)
+            }
+        }
+        return actualBoard
     }
 
     private fun gameOver(game: Game): Boolean {
@@ -87,7 +89,7 @@ class Game(
         return actualBoard
     }
 
-    fun getMovements(): Array<Board> {
+    fun getMovements(): Array<Movement> {
         return movements
     }
 
