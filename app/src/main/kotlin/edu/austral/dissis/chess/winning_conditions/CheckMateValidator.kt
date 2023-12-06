@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.winning_conditions
 
-import edu.austral.dissis.chess.util.getAllPossiblePieceMovements
+import edu.austral.dissis.common.util.getAllPossiblePieceMovements
 import edu.austral.dissis.chess.util.getPossibleKingMoves
 import edu.austral.dissis.chess.validators.NotInCheck
 import edu.austral.dissis.common.results.validation_results.InvalidResult

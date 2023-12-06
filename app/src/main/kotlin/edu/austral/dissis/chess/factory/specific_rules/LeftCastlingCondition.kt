@@ -10,14 +10,36 @@ import edu.austral.dissis.common.structure.Movement
 
 class LeftCastlingCondition: MovementRule {
     override fun validate(movement: Movement, board: Board): ValidationResult {
-        if (board.getPiece(movement.getFrom())!!.getType() != PieceType.KING) return InvalidResult("The piece is not a king")
+        if (noRookToTheLeft(movement, board)) return InvalidResult("There is no rook to the left of the king")
 
-        if (movement.getTo().getRow() != movement.getFrom().getRow()) return InvalidResult("The king can't move in the Y axis")
+        if (pieceNotKing(movement, board)) return InvalidResult("The piece is not a king")
 
-        if (movement.getTo().getColumn() != movement.getFrom().getColumn() - 2 ) return InvalidResult("The king can't move two squares")
+        if (notHorizontalMovement(movement)) return InvalidResult("The king can't move in the Y axis")
 
-        if (board.getPieceAt(movement.getFrom().getRow(), movement.getFrom().getColumn() - 4)!!.getHasMoved()) return InvalidResult("The rook has already moved")
+        if (notMovingTwoSquaresToTheLeft(movement)) return InvalidResult("The king can only move two squares")
+
+        if (rookAlreadyMoved(movement, board)) return InvalidResult("The rook has already moved")
 
         return ValidResult()
+    }
+
+    private fun noRookToTheLeft(movement: Movement, board: Board): Boolean {
+        return board.getPieceAt(movement.getFrom().getRow(), movement.getFrom().getColumn() - 4) == null
+    }
+
+    private fun pieceNotKing(movement: Movement, board: Board): Boolean {
+        return board.getPiece(movement.getFrom())!!.getType() != PieceType.KING
+    }
+
+    private fun notHorizontalMovement(movement: Movement): Boolean {
+        return movement.getTo().getRow() != movement.getFrom().getRow()
+    }
+
+    private fun notMovingTwoSquaresToTheLeft(movement: Movement): Boolean {
+        return movement.getTo().getColumn() != movement.getFrom().getColumn() - 2
+    }
+
+    private fun rookAlreadyMoved(movement: Movement, board: Board): Boolean {
+        return board.getPieceAt(movement.getFrom().getRow(), movement.getFrom().getColumn() - 4)!!.getHasMoved()
     }
 }

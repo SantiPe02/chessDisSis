@@ -1,8 +1,8 @@
 package edu.austral.dissis.app
 
+import edu.austral.dissis.chess.gui.*
 import edu.austral.dissis.common.enums.Color
 import edu.austral.dissis.common.enums.PieceType
-import edu.austral.dissis.chess.gui.*
 import edu.austral.dissis.common.results.move_results.CanMoveResult
 import edu.austral.dissis.common.results.move_results.GameOverResult
 import edu.austral.dissis.common.results.move_results.InvalidMovement
@@ -20,7 +20,6 @@ class Adapter(private var game: Game): GameEngine {
             is CanMoveResult -> updateGame(result)
             is GameOverResult -> GameOver(colorAdapter(result.getWinner()))
             is InvalidMovement -> InvalidMove(result.getReason())
-            else -> InvalidMove("Unknown error")
         }
     }
 

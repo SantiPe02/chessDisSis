@@ -1,25 +1,18 @@
 package edu.austral.dissis.chess.movers
 
+import edu.austral.dissis.chess.factory.specific_rules.LeftCastlingCondition
 import edu.austral.dissis.chess.util.noPiecesBetweenCastling
-import edu.austral.dissis.common.enums.PieceType
+import edu.austral.dissis.common.movement_rules.MovementRule
 import edu.austral.dissis.common.mover.Mover
+import edu.austral.dissis.common.results.validation_results.ValidResult
 import edu.austral.dissis.common.structure.Board
 import edu.austral.dissis.common.structure.Movement
 import edu.austral.dissis.common.structure.Position
 
 class LeftCastling: Mover {
+    private val leftCastling: MovementRule = LeftCastlingCondition()
     override fun validate(movement: Movement, board: Board): Boolean {
-        if (board.getPiece(movement.getFrom())!!.getType() != PieceType.KING) return false
-
-        if (movement.getTo().getRow() != movement.getFrom().getRow()) return false
-
-        if (movement.getTo().getColumn() != movement.getFrom().getColumn() - 2 ) return false
-
-        if (!noPiecesBetweenCastling(board, movement)) return false
-
-        if (board.getPieceAt(movement.getFrom().getRow(), movement.getFrom().getColumn() - 4)!!.getHasMoved()) return false
-
-        return true
+        return leftCastling.validate(movement, board) is ValidResult && noPiecesBetweenCastling(board, movement)
     }
 
     override fun move(movement: Movement, board: Board): Board {

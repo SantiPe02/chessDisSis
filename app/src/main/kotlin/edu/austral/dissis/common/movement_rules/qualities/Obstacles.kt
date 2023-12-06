@@ -9,7 +9,6 @@ import edu.austral.dissis.common.structure.Movement
 
 class Obstacles: MovementRule {
     override fun validate(movement: Movement, board: Board): ValidationResult {
-        //implement a method that checks if there are obstacles in the way of any movementRule. It should return InvalidResult if there are any, and ValidResult if there are none.
         val from = movement.getFrom()
         val to = movement.getTo()
         val x = from.getRow()

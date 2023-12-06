@@ -28,7 +28,7 @@ class Game(
             if (validatePieceRules(movement)) {
                 val newMovements = movements + movement
                 val newGame =
-                    Game(newBoard, newMovements, switchTurn(), validators, winningConditions, turnManager, movers)
+                    Game(newBoard, newMovements, turnManager.switchTurn(this, newBoard), validators, winningConditions, turnManager, movers)
                 if (gameOver(newGame)) {
                     return GameOverResult(turn)
                 }
@@ -36,10 +36,6 @@ class Game(
             }
         }
         return InvalidMovement("Invalid movement")
-    }
-
-    private fun canMove(movement: Movement): Boolean {
-        return validatePieceRules(movement) && validateValidators(movement)
     }
 
     private fun validatePieceRules(movement: Movement): Boolean {
@@ -81,27 +77,11 @@ class Game(
         return false
     }
 
-    private fun switchTurn(): Color {
-        return turnManager.switchTurn(this.getTurn(), actualBoard)
-    }
-
     fun getActualBoard(): Board {
         return actualBoard
     }
 
-    fun getMovements(): Array<Movement> {
-        return movements
-    }
-
     fun getTurn(): Color {
         return turn
-    }
-
-    fun getValidators(): Array<Validator> {
-        return validators
-    }
-
-    fun getWinningConditions(): Array<WinningCondition> {
-        return winningConditions
     }
 }

@@ -6,6 +6,7 @@ import edu.austral.dissis.common.results.validation_results.ValidResult
 import edu.austral.dissis.common.results.validation_results.ValidationResult
 import edu.austral.dissis.common.structure.Board
 import edu.austral.dissis.common.structure.Movement
+import edu.austral.dissis.common.structure.Piece
 
 class IsEating: MovementRule {
     override fun validate(movement: Movement, board: Board): ValidationResult {
@@ -21,11 +22,14 @@ class IsEating: MovementRule {
         val enemyPiece = board.getPieceAt(endingRow, endingColumn)
         val toPiece = board.getPiece(to)
 
-
-
-        if (enemyPiece != null && enemyPiece.getColor() != movement.getTurn() && toPiece == null) {
+        if (ableToEat(enemyPiece, movement, toPiece)){
             return ValidResult()
         }
+
         return InvalidResult("Invalid movement: no enemy around")
+    }
+
+    private fun ableToEat(enemyPiece: Piece?, movement: Movement, toPiece: Piece?): Boolean{
+        return enemyPiece != null && enemyPiece.getColor() != movement.getTurn() && toPiece == null
     }
 }

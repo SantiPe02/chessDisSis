@@ -5,6 +5,7 @@ import edu.austral.dissis.common.enums.PieceType
 import edu.austral.dissis.common.results.validation_results.ValidResult
 import edu.austral.dissis.common.structure.Board
 import edu.austral.dissis.common.structure.Movement
+import edu.austral.dissis.common.structure.Piece
 import edu.austral.dissis.common.structure.Position
 import edu.austral.dissis.common.validators.InBoundsValidator
 import edu.austral.dissis.common.validators.MovementValidator
@@ -24,10 +25,14 @@ fun getPossibleKingMoves(board: Board, color: Color): List<Movement> {
         for (j in -1..1) {
             if (i == 0 && j == 0) continue
             val movement = Movement(kingPosition, Position(kingPosition.getRow() + i, kingPosition.getColumn() + j), color, board)
-            if (InBoundsValidator().validate(movement, board) is ValidResult && MovementValidator().validate(movement, board) is ValidResult && king.getRules().validate(movement, board) is ValidResult) {
+            if (ableToMove(movement, board, king)) {
                 possibleMoves.add(movement)
             }
         }
     }
     return possibleMoves
+}
+
+private fun ableToMove(movement: Movement, board: Board, king: Piece): Boolean {
+    return InBoundsValidator().validate(movement, board) is ValidResult && MovementValidator().validate(movement, board) is ValidResult && king.getRules().validate(movement, board) is ValidResult
 }
