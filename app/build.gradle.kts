@@ -15,15 +15,15 @@ repositories {
     maven {
         url = uri("https://maven.pkg.github.com/austral-ingsis/chess-ui")
         credentials {
-            username = project.properties["GITHUB_USER"] as String? ?: System.getenv("GITHUB_USER")
-            password = project.properties["GITHUB_TOKEN"] as String? ?: System.getenv("GITHUB_TOKEN")
+            username = project.properties["GITHUB_USER"]!!.toString()
+            password = project.properties["GITHUB_TOKEN"]!!.toString()
         }
     }
     maven {
         url = uri("https://maven.pkg.github.com/austral-ingsis/chess-simple-client-server")
         credentials {
-            username = project.properties["GITHUB_USER"] as String? ?: System.getenv("GITHUB_USER")
-            password = project.properties["GITHUB_TOKEN"] as String? ?: System.getenv("GITHUB_TOKEN")
+            username = project.properties["GITHUB_USER"]!!.toString()
+            password = project.properties["GITHUB_TOKEN"]!!.toString()
         }
     }
 }
@@ -33,11 +33,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("edu.austral.dissis.chess:chess-ui:2.0.1")
     implementation("edu.austral.dissis.chess:simple-client-server:1.2.0")
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.3")
 }
 
 javafx {
@@ -48,4 +46,10 @@ javafx {
 application {
     // Define the main class for the application.
     mainClass.set("edu.austral.dissis.chess.AppKt")
+}
+
+sourceSets {
+    test {
+        kotlin.srcDir("src/test/kotlin")
+    }
 }

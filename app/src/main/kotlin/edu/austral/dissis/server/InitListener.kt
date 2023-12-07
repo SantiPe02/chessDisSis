@@ -1,4 +1,10 @@
 package edu.austral.dissis.server
 
-class InitListener {
+import edu.austral.ingsis.clientserver.Message
+import edu.austral.ingsis.clientserver.MessageListener
+
+class InitListener(val server: GameServer) : MessageListener<Unit> {
+    override fun handleMessage(message: Message<Unit>) {
+        server.handleInitialConnection()
+    }
 }

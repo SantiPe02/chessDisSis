@@ -6,5 +6,7 @@ enum class PieceType {
     KNIGHT,
     BISHOP,
     QUEEN,
-    KING
+    KING,
+    ARCHBISHOP,
+    CHANCELLOR,
 }

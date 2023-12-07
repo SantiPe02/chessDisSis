@@ -22,6 +22,8 @@ fun createClassicChessRules(type: PieceType): MovementRule {
             PieceType.BISHOP -> classicBishopMovement()
             PieceType.QUEEN -> classicQueenMovement()
             PieceType.KING -> classicKingMovement()
+            PieceType.ARCHBISHOP -> createArchbishopRules()
+            PieceType.CHANCELLOR -> createChancellorRules()
         }
     }
     private fun classicPawnMovement(): MovementRule {
@@ -166,6 +168,47 @@ fun createClassicChessRules(type: PieceType): MovementRule {
                         HorizontalMove(),
                         Obstacles(),
                         LimitedQuantity(2)
+                    )
+                )
+            )
+        )
+    }
+    private fun createArchbishopRules(): MovementRule {
+            return OrRule(
+                listOf(
+                    AndRule(
+                        listOf(
+                            Diagonal(),
+                            Obstacles()
+                        )
+                    ),
+                    AndRule(
+                        listOf(
+                            LMove()
+                        )
+                    )
+                )
+            )
+    }
+
+    private fun createChancellorRules(): MovementRule {
+        return OrRule(
+            listOf(
+                AndRule(
+                    listOf(
+                        VerticalMove(),
+                        Obstacles()
+                    )
+                ),
+                AndRule(
+                    listOf(
+                        HorizontalMove(),
+                        Obstacles()
+                    )
+                ),
+                AndRule(
+                    listOf(
+                        LMove()
                     )
                 )
             )

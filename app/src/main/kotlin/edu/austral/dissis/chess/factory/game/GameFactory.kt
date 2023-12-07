@@ -24,3 +24,14 @@ fun createInitialChessGame(): Game {
 
     return Game(board, arrayOf(), turn, validators, winningConditions, turnManager, movers)
 }
+
+fun createInitialCapablancaGame(): Game {
+    val board = createCapablancaBoard()
+    val validators = arrayOf(TeamValidator(), InBoundsValidator(), MovementValidator(), NotInCheck())
+    val turn = Color.WHITE
+    val winningConditions = arrayOf(CheckMateValidator(), AnotherWinningCondition())
+    val turnManager = ChessTurnManager()
+    val movers = listOf(RightCastling(), LeftCastling(), Promotion(), RegularMove())
+
+    return Game(board, arrayOf(), turn, validators, winningConditions, turnManager, movers)
+}
