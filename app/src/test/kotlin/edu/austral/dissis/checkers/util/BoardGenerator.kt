@@ -42,3 +42,27 @@ fun boardWithPawnCanEat(): Board {
             Position(4,4) to Piece("pawn2", Color.BLACK, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
         ), 8,8)
 }
+
+fun boardWithTwoPossibleEatings(): Board {
+    return Board(
+        mapOf(
+            Position(3, 3) to Piece("pawn1", Color.WHITE, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+            Position(4,4) to Piece("pawn2", Color.BLACK, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+            Position(6, 6) to Piece("pawn3", Color.BLACK, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+        ), 8,8)
+}
+
+fun boardAfterFirstEating(): Board {
+    return Board(
+        mapOf(
+            Position(5, 5) to Piece("pawn1", Color.WHITE, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+            Position(6,6) to Piece("pawn2", Color.BLACK, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+        ), 8,8)
+}
+
+fun boardAfterSecondEating(): Board {
+    return Board(
+        mapOf(
+            Position(7, 7) to Piece("pawn1", Color.WHITE, PieceType.PAWN, createClassicCheckersRules(PieceType.PAWN), true),
+        ), 8,8)
+}
